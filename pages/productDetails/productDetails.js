@@ -312,7 +312,7 @@ Page({
   wx.request({
     url: 'http://172.16.44.85:8007/goods/sku/user/findSpecifications',
     data: {
-      id: "1017706218555424768",
+      id: "1017703940456955905",
     },
     method: "POST",
     dataType: "json",
@@ -328,13 +328,16 @@ Page({
         var key1;
         var key2;
         var key;
+        var k1=0;
+        var k2=0;
       for(var i=0;i<data.attributes.length;i++){
         if(data.attributes[i].index==1){    
           type1= data.attributes[i];
           for(var j=0;j<type1.attributes.length;j++){
             if (type1.attributes[j].check){
               activeIndex1=j;
-              key1 = "1" + ":" + activeIndex1;
+              k1 = type1.attributes[j].index;
+              key1 = "1" + ":" + k1;
             }
           }
         }else{
@@ -342,17 +345,18 @@ Page({
           for (var j = 0; j < type2.attributes.length; j++) {
             if (type2.attributes[j].check) {
               var activeIndex2 = j;
-              key2 = "2" + ":" + activeIndex2;
+              k2 = type2.attributes[j].index;
+              key2 = "2" + ":" + k2;
               key=key1+","+key2;
             }
           }
         }
       }
-      console.log(key1);
-      console.log(key2);
+      // console.log(key1);
+      // console.log(key2);
       var shop={};
-      console.log(type2)
-      console.log(activeIndex1)
+      // console.log(type2)
+      // console.log(activeIndex1)
       for (var j = 0; j < type2.attributes.length; j++) {
         type2.attributes[j]["able"] = "";
       }
@@ -360,13 +364,14 @@ Page({
         type1.attributes[j]["able"] = "";
       }
       for (var k = 0; k < data.mapping.length;k++){
-        var count1 = activeIndex1+1;
+        var count1 = data.mapping[k].key.split(",")[1].split(":")[1];
+        console.log(count1);
          for (var j = 0; j < type2.attributes.length; j++) {
            if (type2.attributes[j].index == count1) {
              type2.attributes[j]["able"] = true;
            }
          }
-         var count2 = activeIndex2 + 1;
+         var count2 = data.mapping[k].key.split(",")[0].split(":")[1];
          for (var j = 0; j < type1.attributes.length; j++) {
            if (type1.attributes[j].index == count2) {
              type1.attributes[j]["able"] = true;
@@ -379,13 +384,27 @@ Page({
         
    
       }
-      console.log(type2)
+      var attr1;
+      var attr2;
+      for(var i=0;i<type1.attributes.length;i++){
+        if(type1.attributes[i].check){
+          attr1 = type1.attributes[i].value;
+        }
+      }
+      for (var i = 0; i < type2.attributes.length; i++) {
+        if (type2.attributes[i].check) {
+          attr2 = type2.attributes[i].value;
+        }
+      }
+      // console.log(shop);
       that.setData({
         type1,
         type2,
         key1,
         key2,
         key,
+        attr1,
+        attr2,
         now:shop,
         activeIndex1,
         activeIndex2,

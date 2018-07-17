@@ -20,7 +20,7 @@
     <image src='../img/go.png' />
   </view>
   <view bindtap='number'>
-    <text>数量和规格</text>
+    <text>{{attr1}}==""?数量和规格:{{attr1}} {{attr2}} X{{num}} </text>
     <image src='../img/go.png' />
   </view>
   <view bindtap='param'>
@@ -86,7 +86,7 @@
          <text class='title'>{{now.sysName}}</text>
          <view class='product_ruler'>
            <text class='del'>￥{{now.price}} <text>￥{{product.price}}</text></text> 
-           <text class='ruler_sx'>{{attr1}}  {{attr2}} </text>
+           <text class='ruler_sx'>{{attr1}}  {{attr2}} X{{num}} </text>
          </view>
       </view>
      </view>
