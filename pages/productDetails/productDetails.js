@@ -71,12 +71,10 @@ Page({
     })
   },
   choose1:function(e){
-   
    var index1= e.currentTarget.dataset.index;
    if(this.data.type1.attributes[index1-1].able==""){
      return;
    }
-  // console.log(index1)
   var type2 = this.data.type2;
   //mapping[i].key.split(",")[1].split(":")[1];
   //先把先把之前的恢复到初始化
@@ -88,7 +86,6 @@ Page({
   })
    var key1 = this.data.type1.index +":"+ this.data.type1.attributes[index1 - 1].index;
    var key =key1 + "," + this.data.key2;
-  //  console.log(key)
    var now = null;
    var name=this.data.type1.attributes[index1-1].value;
    var mapping=this.data.mapping;
@@ -99,27 +96,16 @@ Page({
      }
    }
    for(var i=0;i<mapping.length;i++){
-
-      //  console.log(type2.attributes[j].index);
        if (mapping[i].key.split(",")[0].split(":")[1] == index1){
        var count = mapping[i].key.split(",")[1].split(":")[1];
-      //  console.log(count);
        var type2 = this.data.type2;
-       //mapping[i].key.split(",")[1].split(":")[1];
        for (var j = 0; j < type2.attributes.length; j++) {
-      //  console.log(type2.attributes[j].index);
-      //  console.log(count)
          if(type2.attributes[j].index==count){
           type2.attributes[j]["able"] = true;
-       
-         }
-  
-       
+         } 
        }
      }
    }
-   console.log(type2);
-  //  console.log(this.data.type1);
    var index1 = e.currentTarget.dataset.index;
    console.log(this.data.type1.attributes[index1 - 1].able)
    if (this.data.type1.attributes[index1 - 1].able == "") {
@@ -133,12 +119,9 @@ Page({
      key1,
      now,
      type2
-    //  nowPrice:this.data.product.price
    })
   },
   choose2: function (e) {
-
-    console.log(e)
     var index = e.currentTarget.dataset.index;
     var type1 = this.data.type1;
     var type2 = this.data.type2;
@@ -146,7 +129,6 @@ Page({
       return;
     }
     var name = this.data.type2.attributes[index - 1].value;
-    //mapping[i].key.split(",")[1].split(":")[1];
     //先把先把之前的恢复到初始化
     for (var j = 0; j < type1.attributes.length; j++) {
       type1.attributes[j]["able"] = "";
@@ -154,47 +136,27 @@ Page({
     this.setData({
       type1
     })
-
     var name = this.data.type2.attributes[index - 1].value;
     var key2 = this.data.type2.index + ":" + this.data.type2.attributes[index - 1].index
     var key=this.data.key1+","+key2;
-    // console.log(this.data.attr1);
     var mapping=this.data.mapping;
     var now=null;
     for(var i=0;i<mapping.length;i++){
-      // console.log(key == mapping[i].key)
         if(key==mapping[i].key){
           now = mapping[i];
         }
     }
-    
     for (var i = 0; i < mapping.length; i++) {
-
-      //  console.log(type2.attributes[j].index);
       if (mapping[i].key.split(",")[1].split(":")[1] == index) {
         var count = mapping[i].key.split(",")[0].split(":")[1];
-        //  console.log(count);
         var type1 = this.data.type1;
-        //mapping[i].key.split(",")[1].split(":")[1];
         for (var j = 0; j < type1.attributes.length; j++) {
-          // console.log(type2.attributes[j].index);
-          //  console.log(count)
           if (type1.attributes[j].index == count) {
             type1.attributes[j]["able"] = true;
-
           }
-
-
         }
       }
     }
-    // console.log(index)
-    // console.log(type2);
-    // console.log(this.data.type2.attributes[index].able)
-    //  console.log(this.data.type1);
-    console.log(type2);
-
-   
     this.setData({
       type1,
     attr2:name,
@@ -203,13 +165,10 @@ Page({
       now,
       key2,
       key
-
     })
-
   },
 //点击参数
   param: function () {
-    console.log(11)
     this.setData({
       showModal4: !this.data.showModal4
     });
@@ -288,7 +247,7 @@ Page({
     wx.request({
       url: 'http://172.16.44.85:8007/goods/sku/user/details',
       data: {
-        id: "1016135125570228224",
+        id: "1017703940456955906",
       },
       method: "POST",
       dataType: "json",
@@ -353,7 +312,7 @@ Page({
   wx.request({
     url: 'http://172.16.44.85:8007/goods/sku/user/findSpecifications',
     data: {
-      id: "1017062070691467265",
+      id: "1017706218555424768",
     },
     method: "POST",
     dataType: "json",
@@ -365,17 +324,71 @@ Page({
       var data=res.data.data;
         var type1;
         var type2;
+        var activeIndex1;
+        var key1;
+        var key2;
+        var key;
       for(var i=0;i<data.attributes.length;i++){
         if(data.attributes[i].index==1){    
           type1= data.attributes[i];
+          for(var j=0;j<type1.attributes.length;j++){
+            if (type1.attributes[j].check){
+              activeIndex1=j;
+              key1 = "1" + ":" + activeIndex1;
+            }
+          }
         }else{
           type2 = data.attributes[i];
+          for (var j = 0; j < type2.attributes.length; j++) {
+            if (type2.attributes[j].check) {
+              var activeIndex2 = j;
+              key2 = "2" + ":" + activeIndex2;
+              key=key1+","+key2;
+            }
+          }
         }
       }
-      console.log(data);
+      console.log(key1);
+      console.log(key2);
+      var shop={};
+      console.log(type2)
+      console.log(activeIndex1)
+      for (var j = 0; j < type2.attributes.length; j++) {
+        type2.attributes[j]["able"] = "";
+      }
+      for (var j = 0; j < type1.attributes.length; j++) {
+        type1.attributes[j]["able"] = "";
+      }
+      for (var k = 0; k < data.mapping.length;k++){
+        var count1 = activeIndex1+1;
+         for (var j = 0; j < type2.attributes.length; j++) {
+           if (type2.attributes[j].index == count1) {
+             type2.attributes[j]["able"] = true;
+           }
+         }
+         var count2 = activeIndex2 + 1;
+         for (var j = 0; j < type1.attributes.length; j++) {
+           if (type1.attributes[j].index == count2) {
+             type1.attributes[j]["able"] = true;
+           }
+         }
+        if(key==data.mapping[k].key){
+          shop = data.mapping[k];
+       
+        }
+        
+   
+      }
+      console.log(type2)
       that.setData({
         type1,
         type2,
+        key1,
+        key2,
+        key,
+        now:shop,
+        activeIndex1,
+        activeIndex2,
         mapping:data.mapping
       })
     }
