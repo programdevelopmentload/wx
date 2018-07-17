@@ -20,7 +20,7 @@
     <image src='../img/go.png' />
   </view>
   <view bindtap='number'>
-    <text>{{attr1}}==""?数量和规格:{{attr1}} {{attr2}} X{{num}} </text>
+    <text>{{attr1}}  {{attr2}} X{{num}} </text>
     <image src='../img/go.png' />
   </view>
   <view bindtap='param'>
