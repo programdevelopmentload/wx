@@ -186,15 +186,15 @@
             <ol>
                 <!--<li class="col-sm-0">序号</li>-->
                 <li class="col-sm-2">商品信息</li>
-                <li class="col-sm-1">商品类型</li>
+                <li class="col-sm-2">商品编号</li>
 
-                <li class="col-sm-1">商品编号</li>
+                <li class="col-sm-1">商品类型</li>
                 <li class="col-sm-1">销售价格</li>
-                <li class="col-sm-1">上架时间</li>
-                <li class="col-sm-1">样品量</li>
+                <li class="col-sm-1">在售时间</li>
                 <li class="col-sm-1">商品状态</li>
 
-                <li class="">操作</li>
+
+                <li class="col-sm-1">操作</li>
 
             </ol>
             <!--<p><label><input type="checkbox">全选</label> <span>上架陈列</span>  </p>-->
@@ -210,9 +210,9 @@
 
                     <span class="s2">白色两关242412214121</span>
                 </li>
-                <li class="col-sm-1 name">标品</li>
+                <li class="col-sm-2 number">标品</li>
 
-                <li class="col-sm-1">2121</li>
+
 
                 <li class="col-sm-1">2011_11_11</li>
                 <li class="col-sm-1">
@@ -225,7 +225,7 @@
                 <li class="col-sm-1">
                     1
                 </li>
-                <li class="edit col-sm-2" ><span>查看</span><span>编辑标题</span><span>打印价签</span></li>
+                <li class="edit col-sm-2" ><span>查看</span></li>
 
             </ul>
         </div>
@@ -320,16 +320,28 @@
     };
     function fillTableData(data) {
         console.log(data)
+
+        if(data==0){
+            $(".allList div").hide();
+            $(".none").html('<img src="../image/warn.png" alt=""><span>您的店铺仍处于锁定状态，无法进行商品交易</span>').css("display","block");
+            return;
+        }else if(res.data==null){
+            $(".allList div").hide();
+            $(".none").html('<img src="../image/warn.png" alt=""><span>本店暂无在售商品</span>').css("display","block");
+            return;
+        }
         // var data=res.data.items;
         var str="";
         for (var i=0;i<data.length;i++){
             str+='<ul class="liCenter"><li class="col-sm-2">' +
                 '<span class="s1"><img src="'+data[i].pics[0].pic+'" alt=""></span><span class="s2">'
             str+=data[i].showName;
-            str+='</span></li><li class="col-sm-1 name">';
+            str+='</span></li>' ;
+            str+='<li class="col-sm-2">'+data[i].id+'</li>'
+            str+=   '<li class="col-sm-1 name">';
 
             str+=data[i].goodsService.goodsType+'</li>'
-            str+='<li class="col-sm-2">'+data[i].id+'</li>'
+
             str+='<li class="col-sm-1">￥'+data[i].price+'</li>'
             str+='<li class="col-sm-1">'+data[i].onShelfTime+'</li>'
             str+='<li class="col-sm-1">'+data[i].sampleCount+'</li>'
@@ -344,29 +356,11 @@
                     str+='<li class="col-sm-1">已下架</li>';
                     break
             }
-            str+='  <li class="edit" pro_id="'+data[i].id+'" ><span>查看</span><span>编辑标题</span><span>打印价签</span></li></ul>'
+            str+='  <li class="edit" pro_id="'+data[i].id+'" ><span>查看</span></li></ul>'
         }
         $(".allList div").html(str);
     }
-    rewriteAjax({
-        url:"http://172.16.40.153:8009/shop/findShelfRecord",
-        data:{   'shopId':11010101,
-            'pageSize':5,
-            'currentPage':currentPage,
-            type:type,
-            number:number,
-            keyWord:keyWord,
-        }
-    },function (res) {
-        if(res.data==0){
-            $(".allList div").hide()
-            $(".none").html('<img src="../image/warn.png" alt=""><span>您的店铺仍处于锁定状态，无法进行商品交易</span>').css("display","block");
-        }else if(res.data==null){
-            $(".allList div").hide()
-            $(".none").html('<img src="../image/warn.png" alt=""><span>本店暂无在售商品</span>').css("display","block");
 
-        }
-    })
 </script>
 </body>
 </html>
