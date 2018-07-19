@@ -56,11 +56,13 @@ function Pagination(_url, _pageId, _callBack){
                     // debugger
                     fillData(data.data);//填充数据
                 }else{
+                    console.log(data)
                     // $(window.parent.document).find(".pText").html(data.message);
                     // $(window.parent.document).find("#jumpBox3").show();
                 }
             },
-            error:function(){
+            error:function(data){
+                console.log(data)
                 $("#pic_no").show();
                 $("#table_data").hide();
                 $(".leftBottom").hide();

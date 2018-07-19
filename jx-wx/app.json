@@ -1,8 +1,9 @@
 {
   "pages": [ 
+    "pages/cart/cart",
       "pages/shou/shou",
         "pages/productDetails/productDetails",
-        "pages/cart/cart",
+       
     "pages/location/location",
       
     "pages/person/person ",

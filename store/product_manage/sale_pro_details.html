@@ -226,11 +226,6 @@
     <a href="javascript:;">
         <img src="../image/store.png"/>
     </a>
-    <ul>
-        <!--<li><span class="head_active">首页</span></li>-->
-        <li><span>基础设置</span></li>
-
-    </ul>
     <ol>
         <li>退出</li>
         <i></i>
@@ -240,7 +235,14 @@
     </ol>
 
 </div>
-
+<div id="header" class="header clearfix">
+    <ul>
+        <li><span >店铺管理</span></li>
+        <li><span class="head_active">商品管理</span></li>
+        <li><span>仓储管理</span></li>
+        <li><span>订单管理</span></li>
+    </ul>
+</div>
 <div id="box">
     <div class="left">
 
@@ -266,7 +268,7 @@
                 <span>在售管理</span>
                 <ul>
 
-                    <li>在售商品</li>
+                    <li class="first">在售商品</li>
 
 
                 </ul>
@@ -389,19 +391,11 @@
         var data=res.data;
         if(res.success){
             $(".chenlie .fl p span").html(data[0].showName);
-            /*
-            *           <li class="col-sm-2">规格信息</li>
-                <li class="col-sm-2">商品编码</li>
-                <li class="col-sm-2">商品批次</li>
-                <li class="col-sm-2">销售价</li>
-                <li class="col-sm-2">店铺库存</li>
-                <li >规格图片</li>*/
             $(".basics_msg").append('<li><span>所属分类：</span>'+data[0].leafClassName+'</li>');
-
             $(".basics_msg").append('<li><span>商品类型：</span>'+data[0].type+'</li>');
             $(".basics_msg").append('<li><span>所属品牌：</span>'+data[0].brandName+'</li>');
             $(".basics_msg").append('<li><span>型号：</span>'+data[0].model+'</li>');
-            var str=""
+            var str="";
             for(var i=0;i<data[0].attributes.length;i++){
                 str+=data[0].attributes[i].value+" ";
                 $(".basics_msg").append('<li><span>'+data[0].attributes[i].attributeName+'</span>'+data[0].attributes[i].value+'</li>');

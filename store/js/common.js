@@ -41,6 +41,10 @@ $(".left ul ul li").click(function () {
     if(text=="上架记录"){
         window.location.href="../product_manage/putaway_record.html"
     }
+    if(text=="在售商品"){
+        window.location.href="../product/sale__product.html"
+
+    }
     if(text=="库存管理"){
         window.location.href="../product/cover_manage.html"
 
@@ -111,6 +115,8 @@ function getBaseUrl(param) {
         return 'http://172.16.40.134:8015';
     }else if(param=="yuan"){
         return 'http://172.16.40.239:8008';
+    }else if(param=="zmy"){
+        return 'http://172.16.44.131:8009';
     }
 }
 // token验证

@@ -123,7 +123,7 @@ $('#userName').blur(function(){
         $(this).next().show().html('支持中文、字母、数字,4-32位');
         $(this).next().show().css('color','red');
         return false;
-    }else if(($(this).val()).length < 4|| ($(this).val()).length > 32){
+    }else if(($(this).val()).length < 4|| ($(this).val()).length > 32||/^[0-9]+$/.test($("#userName").val())){
         $(this).next().show().html('请输入4-32位数字或字母');
         $(this).next().show().css('color','red');
         return false;

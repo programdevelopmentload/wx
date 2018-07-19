@@ -293,7 +293,7 @@
      * @params callBack 自己定义的，拼接table数据的方法，data：callBack的参数：json格式的table数据
      */
     var _nowPage = 1;
-    var pagination = new Pagination('http://172.16.40.153:8009/shop/findShelfRecord', "page", function (data) {
+    var pagination = new Pagination(getBaseUrl("zmy")+'/shop/findShelfRecord', "page", function (data) {
         fillTableData(data);
     });
     function searchNowPage() {//首次两参进入
@@ -308,8 +308,8 @@
     /** 得到搜索条件的json对象 */
     function getParams() {
         var params = {
-            'shopId':11010101,
-            'pageSize':5,
+            'shopId':100201,
+            'pageSize':10,
             'currentPage':currentPage,
             type:type,
             number:number,
@@ -319,13 +319,13 @@
         return params;
     };
     function fillTableData(data) {
-        console.log(data)
+        console.log(data);
 
         if(data==0){
             $(".allList div").hide();
             $(".none").html('<img src="../image/warn.png" alt=""><span>您的店铺仍处于锁定状态，无法进行商品交易</span>').css("display","block");
             return;
-        }else if(res.data==null){
+        }else if(data.data==null){
             $(".allList div").hide();
             $(".none").html('<img src="../image/warn.png" alt=""><span>本店暂无在售商品</span>').css("display","block");
             return;
@@ -334,33 +334,37 @@
         var str="";
         for (var i=0;i<data.length;i++){
             str+='<ul class="liCenter"><li class="col-sm-2">' +
-                '<span class="s1"><img src="'+data[i].pics[0].pic+'" alt=""></span><span class="s2">'
+                '<span class="s1"><img src="'+data[i].pics[0].pic+'" alt=""></span><span class="s2">';
             str+=data[i].showName;
             str+='</span></li>' ;
-            str+='<li class="col-sm-2">'+data[i].id+'</li>'
+            str+='<li class="col-sm-2">'+data[i].id+'</li>';
             str+=   '<li class="col-sm-1 name">';
 
-            str+=data[i].goodsService.goodsType+'</li>'
+            str+=data[i].goodsService.goodsType+'</li>';
 
-            str+='<li class="col-sm-1">￥'+data[i].price+'</li>'
-            str+='<li class="col-sm-1">'+data[i].onShelfTime+'</li>'
-            str+='<li class="col-sm-1">'+data[i].sampleCount+'</li>'
+            str+='<li class="col-sm-1">￥'+data[i].price+'</li>';
+            str+='<li class="col-sm-1">'+data[i].onShelfTime+'</li>';
+            str+='<li class="col-sm-1">'+data[i].sampleCount+'</li>';
             switch (data[i].state){
                 case 2:
                     str+='<li class="col-sm-1">待上架</li>';
-                    break
+                    break;
                 case 3:
                     str+='<li class="col-sm-1">在售</li>';
-                    break
+                    break;
                 case 4:
                     str+='<li class="col-sm-1">已下架</li>';
                     break
             }
-            str+='  <li class="edit" pro_id="'+data[i].id+'" ><span>查看</span></li></ul>'
+            str+='  <li class="edit" pro_id="'+data[i].id+'" ><span>查看</span><span>打印价签</span></li></ul>'
         }
         $(".allList div").html(str);
     }
-
+$(".allList").on("click",".edit span",function () {
+    var id=$(this).parent().attr("pro_id");
+    sessionStorage.setItem("id",id);
+    window.location.href="sale_pro_details.html"
+})
 </script>
 </body>
 </html>

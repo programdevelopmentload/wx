@@ -99,11 +99,14 @@ Page({
        if (mapping[i].key.split(",")[0].split(":")[1] == index1){
        var count = mapping[i].key.split(",")[1].split(":")[1];
        var type2 = this.data.type2;
-       for (var j = 0; j < type2.attributes.length; j++) {
-         if(type2.attributes[j].index==count){
-          type2.attributes[j]["able"] = true;
-         } 
+       if (mapping[i].sell){
+         for (var j = 0; j < type2.attributes.length; j++) {
+           if (type2.attributes[j].index == count) {
+             type2.attributes[j]["able"] = true;
+           }
+         }
        }
+  
      }
    }
    var index1 = e.currentTarget.dataset.index;
@@ -150,11 +153,14 @@ Page({
       if (mapping[i].key.split(",")[1].split(":")[1] == index) {
         var count = mapping[i].key.split(",")[0].split(":")[1];
         var type1 = this.data.type1;
-        for (var j = 0; j < type1.attributes.length; j++) {
-          if (type1.attributes[j].index == count) {
-            type1.attributes[j]["able"] = true;
+        if (mapping[i].sell){
+          for (var j = 0; j < type1.attributes.length; j++) {
+            if (type1.attributes[j].index == count) {
+              type1.attributes[j]["able"] = true;
+            }
           }
         }
+       
       }
     }
     this.setData({
@@ -364,19 +370,22 @@ Page({
         type1.attributes[j]["able"] = "";
       }
       for (var k = 0; k < data.mapping.length;k++){
-        var count1 = data.mapping[k].key.split(",")[1].split(":")[1];
-        console.log(count1);
-         for (var j = 0; j < type2.attributes.length; j++) {
-           if (type2.attributes[j].index == count1) {
-             type2.attributes[j]["able"] = true;
-           }
-         }
-         var count2 = data.mapping[k].key.split(",")[0].split(":")[1];
-         for (var j = 0; j < type1.attributes.length; j++) {
-           if (type1.attributes[j].index == count2) {
-             type1.attributes[j]["able"] = true;
-           }
-         }
+        if(data.mapping.sell){
+          var count1 = data.mapping[k].key.split(",")[1].split(":")[1];
+          console.log(count1);
+          for (var j = 0; j < type2.attributes.length; j++) {
+            if (type2.attributes[j].index == count1) {
+              type2.attributes[j]["able"] = true;
+            }
+          }
+          var count2 = data.mapping[k].key.split(",")[0].split(":")[1];
+          for (var j = 0; j < type1.attributes.length; j++) {
+            if (type1.attributes[j].index == count2) {
+              type1.attributes[j]["able"] = true;
+            }
+          }
+        }
+
         if(key==data.mapping[k].key){
           shop = data.mapping[k];
        

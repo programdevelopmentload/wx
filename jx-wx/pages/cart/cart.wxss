@@ -1,1 +1,14 @@
-/* pages/cart/cart.wxss */
+page{
+  display: block;
+  height: 100%;
+}
+.noProduct{
+  width: 100%;
+  height: 100%;
+  background: #f2f2f2;
+  padding-top:100rpx;
+}
+.noProduct image{
+  width: 300rpx;
+  height:200rpx
+}

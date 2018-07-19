@@ -173,7 +173,7 @@
 
         for(var i=0;i<data.length;i++){
             var obj={};
-            obj.shop_mess=data[0].storeName;
+            obj.shop_mess=data[i].storeName;
             obj.shop_number=data[i].storePosition;
             // var str="";
             // for(var j=0;j<data[i].storeServerDetails.length;j++){
@@ -184,7 +184,7 @@
             arr.push(obj);
             console.log(arr)
         }
-        table(arr2,arr);
+        $("#storage").bootstrapTable({columns:arr2,data:arr});
     })
 
     $(".btn-primary").click(function () {
